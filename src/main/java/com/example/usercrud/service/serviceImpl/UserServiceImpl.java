@@ -5,6 +5,7 @@ import com.example.usercrud.exception.ApiRequestException;
 import com.example.usercrud.model.User;
 import com.example.usercrud.repository.UserRepository;
 import com.example.usercrud.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +13,8 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    public final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public User getUser(Long userId) {
@@ -68,7 +66,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(Long userId, UserDto userDto) {
         Optional<User> userOptional = userRepository.findById(userId);
-        System.out.println(userOptional);
         if(userOptional.isPresent()){
             User user = userOptional.get();
             return saveUser(user,userDto);

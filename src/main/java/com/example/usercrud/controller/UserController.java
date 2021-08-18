@@ -2,21 +2,23 @@ package com.example.usercrud.controller;
 
 import com.example.usercrud.dto.UserDto;
 import com.example.usercrud.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/")
+@Slf4j
 public class UserController {
-    public  final UserService userService;
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
+    @Autowired
+     UserService userService;
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId){
         return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
+
     }
 
     @GetMapping("/users")
